@@ -28,6 +28,7 @@ export const getAllUsers = async (req, res, next) => {
  */
 export const UserLogin = async (req, res, next) => {
   try {
+    console.log("Request------>",req.body);
     const data = await UserService.UserLogin(req.body);
     res.status(HttpStatus.OK).json({
       code: HttpStatus.OK,
