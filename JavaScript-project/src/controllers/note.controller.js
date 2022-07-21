@@ -2,8 +2,11 @@ import HttpStatus from 'http-status-codes';
 import * as NoteService from '../services/note.service';
 
 export const AddNote = async (req, res, next) => {
+    console.log("Request Body At ctr----->>", req.body);
         try {
         const data = await NoteService.AddNote(req.body);
+        console.log("Data inside controller--->>", data);
+
         res.status(HttpStatus.CREATED).json({
             code: HttpStatus.CREATED,
             data:data,
@@ -19,7 +22,7 @@ export const getAllNotes = async (req, res, next) => {
         const data = await NoteService.getAllNotes(req.body);
         res.status(HttpStatus.OK).json({
             code: HttpStatus.OK,
-            data:data,
+            data: data,
             message: 'All Notes fetched successfully'
         });
     } catch (error) {
@@ -59,7 +62,7 @@ export const updateNotes = async (req, res, next) => {
 
 export const deleteNotes = async (req, res, next) => {
     try {
-        const data = await NoteService.deleteNotes(req.params._id,req.body.UserID);
+        const data = await NoteService.deleteNotes(req.params._id);
         res.status(HttpStatus.OK).json({
             code: HttpStatus.OK,
             data:[],

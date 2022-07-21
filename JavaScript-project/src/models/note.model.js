@@ -5,6 +5,9 @@ const NoteSchema = new Schema(
         Title: {type: String,required: true,},
         Descreption: {type: String,required: true,},
         Color: {type: String},
+        isArchived: {type: Boolean},
+        isDeleted: {type: Boolean},
+        UserID: {type: String}
     },
     {
         timestamps: true
