@@ -34,3 +34,33 @@ export const updateNotes = async (_id, body) => {
     await Note.findByIdAndDelete({_id,UserID:UserID});
     return '';
   };
+
+  export const archiveNotes = async(_id,UserID) =>{
+    const data = await Note.findByIdAndUpdate(
+      {
+       _id:_id,UserID:UserID
+      },
+      {
+        isArchived: true
+      },
+      {
+        new: true
+      }
+    );
+    return data;
+  }
+  
+  export const isTrash = async(_id,UserID) =>{
+    const data = await Note.findByIdAndUpdate(
+      {
+        _id:_id,UserID:UserID
+      },
+      {
+        isDeleted: true
+      },
+      {
+        new: true
+      }
+    );
+    return data;
+  }
