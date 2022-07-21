@@ -62,7 +62,7 @@ export const updateNotes = async (req, res, next) => {
 
 export const deleteNotes = async (req, res, next) => {
     try {
-        const data = await NoteService.deleteNotes(req.params._id);
+        const data = await NoteService.deleteNotes(req.params._id,req.body.UserID);
         res.status(HttpStatus.OK).json({
             code: HttpStatus.OK,
             data:[],
@@ -72,3 +72,29 @@ export const deleteNotes = async (req, res, next) => {
         next(error);
     }
 };
+
+export const archiveNotes = async(req,res,next) =>{
+    try{
+        const data = await NoteService.archiveNotes(req.params._id,req.body.UserID);
+        res.status(HttpStatus.ACCEPTED).json({
+            code: HttpStatus.ACCEPTED,
+            data:data,
+            message: 'Notes successfully Archived'
+        });
+    }catch (error) {
+        next(error);
+    }
+}
+
+export const isTrash = async(req,res,next) =>{
+    try{
+        const data = await NoteService.isTrash(req.params._id,req.body.UserID);
+        res.status(HttpStatus.OK).json({
+            code: HttpStatus.OK,
+            data:data,
+            message: 'Notes Moved to Trash'
+        });
+    }catch (error) {
+        next(error);
+    }
+}
