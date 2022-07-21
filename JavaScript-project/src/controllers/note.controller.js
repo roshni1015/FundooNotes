@@ -79,7 +79,7 @@ export const archiveNotes = async(req,res,next) =>{
         res.status(HttpStatus.ACCEPTED).json({
             code: HttpStatus.ACCEPTED,
             data:data,
-            message: 'Notes successfully Archived'
+            message: 'Notes Archived successfully'
         });
     }catch (error) {
         next(error);
@@ -92,7 +92,7 @@ export const isTrash = async(req,res,next) =>{
         res.status(HttpStatus.OK).json({
             code: HttpStatus.OK,
             data:data,
-            message: 'Notes Moved to Trash'
+            message: 'Notes Moved to Trash successfully'
         });
     }catch (error) {
         next(error);
