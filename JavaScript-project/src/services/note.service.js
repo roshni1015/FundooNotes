@@ -34,7 +34,7 @@ export const updateNotes = async (_id, body) => {
     await Note.findByIdAndDelete({_id,UserID:UserID});
     return '';
   };
-
+  
   export const archiveNotes = async(_id,UserID) =>{
     const data = await Note.findByIdAndUpdate(
       {
@@ -64,3 +64,5 @@ export const updateNotes = async (_id, body) => {
     );
     return data;
   }
+
+  
