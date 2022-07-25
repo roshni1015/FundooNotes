@@ -1,15 +1,18 @@
+import dotenv from 'dotenv'
+dotenv.config()
+
 const nodemailer = require('nodemailer')
 const { google } = require('googleapis')
 
-CLIENT_ID = '402491212773-bg2ie4hmkj4kf6n4b963v738bmhc1fco.apps.googleusercontent.com'
-CLIENT_SECRET = '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'
-REDIRECT_URI = 'https://developers.google.com/oauthplayground'
-REFRESH_TOKEN = '1//04F3HjttqE-plCgYIARAAGAQSNwF-L9IrLIaaLJGiSZLWQTTJO3B0wMnJ56ibz1YKUz3kd1746H7JgTj_hrtcdN6PH7s6AEAB4OU'
+const CLIENT_ID = process.env.CLIENT_ID
+const CLIENT_SECRET = process.env.CLIENT_SECRET
+const REDIRECT_URI = process.env.REDIRECT_URI
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN
 
 const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
 oAuth2Client.setCredentials({refresh_token: REFRESH_TOKEN})
 
-async function SendMail(){
+export async function MailSender(EmailId, token){
     try{
         const accessToken = await oAuth2Client.getAccessToken();
 
@@ -28,10 +31,11 @@ async function SendMail(){
 
         const mailOptions = {
             from: 'Roshni# <roshniadatrao@gmail.com>',
-            to: 'roshni.adatrao@bridgelabz.com',
+            to: EmailId,
             subject: 'Hello from gmail using API',
             text: 'Hello this is the mail from gmail using API',
-            html: '<h1>Hello this is the mail from gmail using API</h1>'
+            html: `<h1>Hello,<br><br>Click on given link to reset your password!</h1><br><h1>Link:><a href="http://localhost:${process.env.APP_PORT}/api/v1/users/${token}">click here</a></h1>`
+            
         };
 
         const result = await transport.sendMail(mailOptions);
@@ -41,6 +45,6 @@ async function SendMail(){
     }
 }
 
-SendMail()
-.then((result) => console.log('Email Sent---->', result))
-.catch((error) => console.log(error.message));
+// SendMail()
+// .then((result) => console.log('Email Sent---->', result))
+// .catch((error) => console.log(error.message));
