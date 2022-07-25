@@ -14,10 +14,10 @@ router.post('', newUserValidator, userController.UserRegistration);
 //route to get a single user by their user id
 router.post('/login', userController.UserLogin);
 
-//route to update a single user by their user id
-router.put('/:_id', userController.updateUser);
+//route to forgot password
+router.post('/forgotpassword', userController.forgotPassword);
 
-//route to delete a single user by their user id
-router.delete('/:_id', userController.deleteUser);
+//route to reset password
+router.post('/resetpassword/:token', userAuth, userController.resetPassword)
 
 export default router;
