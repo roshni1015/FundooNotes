@@ -71,12 +71,12 @@ export const forgotPassword = async (req, res, next) => {
     const data = await UserService.forgotPassword(req.body);
     res.status(HttpStatus.OK).json({
       code: HttpStatus.OK,
-      message: 'EmailId sent successfully'
+      message: 'Mail sent successfully'
     });
   } catch (error) {
     res.status(HttpStatus.NOT_FOUND).json({
       code: HttpStatus.NOT_FOUND,
-      message: `EmailId not found`
+      message: `EmailID not found`
 
     });
   }

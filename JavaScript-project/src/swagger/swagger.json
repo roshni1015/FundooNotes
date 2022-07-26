@@ -1,0 +1,164 @@
+{
+  "swagger": "2.0",
+  "info": {
+      "version": "V1",
+      "title": " Fundoo Notes App",
+      "description": "Fundoo-notes similar to google-keep developed for storing notes "
+  },
+  "host": "localhost:1000",
+  "basePath": "/api/v1/",
+  "tags": [
+      {
+          "name": "Fundoo using express CLI",
+          "description": "Fundoo-notes similar to google-keep developed for storing notes"
+      }
+  ],
+  "schemes": [
+      "http"
+  ],
+  "consumes": [
+      "application/json"
+  ],
+  "produces": [
+      "application/json"
+  ],
+  "paths": {
+      "/users": {
+          "post": {
+              "tags": ["Users"],
+              "description": "User Resgistration",
+              "parameters": [
+                  {
+                      "name": "Sign UP",
+                      "in": "body",
+                      "description": "Create user",
+                      "schema": {
+                          "$ref": "#/definitions/User"
+                      }
+                  }
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "responses": {
+                  "201": {
+                      "description": "User created successfully"
+                  },
+                  "500": {
+                      "description": "Internal server error"
+                  }
+              }
+          }
+      },"/users/login": {
+          "post": {
+              "tags": ["Users"],
+              "description": "User Login",
+              "parameters": [
+                  {
+                      "name": "Log in",
+                      "in": "body",
+                      "description": "user login",
+                      "schema": {
+                          "$ref": "#/definitions/login"
+                      }
+                  }
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "responses": {
+                  "201": {
+                      "description": "User fetched sucessfully"
+                  },
+                  "404": {
+                    "description": "EmailID doesn't Exists"
+                  },
+                  "500": {
+                      "description": "Internal server error"
+                  }
+              }
+              
+          }
+      }, 
+      "/users/forgotpassword": {
+            "post": {
+        "tags": ["Users"],
+        "description": "Forgot Password",
+        "parameters": [
+            {
+                "name": "Forgot Password",
+                "in": "body",
+                "description": "forgot password",
+                "schema": {
+                    "$ref": "#/definitions/forgotpassword"
+                }
+            }
+        ],
+        "produces": [
+            "application/json"
+        ],
+        "responses": {
+            "201": {
+                "description": "Mail sent successfully"
+            },
+            "404": {
+              "description": "EmailID not found"
+            },
+            "500": {
+                "description": "Internal server error"
+            }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+        
+    }
+}
+    
+},
+ "definitions": {
+      "User": {
+          "type": "object",
+          "properties": {
+              "FirstName": {
+                  "type": "string"
+              },
+              "LastName": {
+                  "type": "string"
+              },
+              "EmailID": {
+                  "type": "string"
+              },"Password": {
+                  "type": "string"
+              }
+          }
+      },
+      "loging":{
+        "type": "object",
+              "properties": {
+                  "EmailID": {
+                      "type": "string"
+                  },"Password": {
+                      "type": "string"
+                  }
+              }
+
+      },
+      "ForgetPassword": {
+        "type": "object",
+        "properties": {
+          "EmailID": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+
+   
+
+
+
+
