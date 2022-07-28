@@ -117,7 +117,43 @@
             
         }
 },
-   
+"/users/{token}": {
+    "post": {
+        "tags": ["Users"],
+        "description": "Reset Password",
+        "parameters": [
+            {
+                "name": "token",
+                "in": "path",
+                "description": "Reset Password"
+                
+            
+            },
+            {
+                "name": "Password",
+                "in": "body",
+                "description": "Reset Password",
+                "required": true,
+                "type":"string",
+                "schema": {
+                    "$ref": "#/definitions/ResetPassword"
+                }
+            }
+            
+        ],
+        "produces": [
+            "application/json"
+        ],
+        "responses": {
+            "201": {
+                "description": "Password Updated successfully"
+            },
+            "500": {
+                "description": "Internal server error"
+            }
+        }
+    }
+},
       "/userNotes": {
             "post": {
             "tags": ["Notes"],
@@ -369,6 +405,14 @@
         "type": "object",
         "properties": {
           "EmailID": {
+            "type": "string"
+          }
+        }
+      },
+      "ResetPassword": {
+        "type": "object",
+        "properties": {
+          "Password": {
             "type": "string"
           }
         }

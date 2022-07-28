@@ -2,6 +2,7 @@ import User from '../models/user.model';
 import bcrypt from 'bcrypt';
 import jwt  from 'jsonwebtoken';
 import { MailSender } from '../utils/nodemailer';
+import { PasswordHash } from '../utils/user.util';
 
 
 //get all users
@@ -56,13 +57,14 @@ export const forgotPassword = async (body) => {
 }
  
 export const resetPassword = async (body) => {
-  const saltRounds = 10;
-  const Hash = await bcrypt.hash(body.Password, saltRounds);
+  //const saltRounds = 10;
+  //const Hash = await bcrypt.hash(body.Password, saltRounds);
   console.log("Inside Service",body.Password);
+  const Hash = await PasswordHash(body.Password);
   body.Password = Hash;
   const data = User.findOneAndUpdate(
     {
-      Email: body.EmailID
+      EmailID: body.EmailID
     },
     {
       Password: body.Password
