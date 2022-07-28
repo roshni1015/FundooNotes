@@ -43,7 +43,7 @@ export const userAuther  = async (req, res, next) => {
         message: 'Authorization token is required'
       };
     const user = await jwt.verify(bearertoken, process.env.FORGOT_KEY);
-    req.body.Email = user.Email
+    req.body.EmailID = user.EmailID
     next();
   } catch (error) {
     res.status(HttpStatus.UNAUTHORIZED).json({
