@@ -10,19 +10,19 @@ import jwt from 'jsonwebtoken';
  * @param {Function} next
  */
 export const userAuth = async (req, res, next) => {
-  console.log("Inside middleware---->>>",req.body);
+  //console.log("Inside middleware---->>>",req.body);
   try {
     let bearerToken = req.header('Authorization');
-    console.log("Bearer token---->>>>",bearerToken);
+    //console.log("Bearer token---->>>>",bearerToken);
     if (!bearerToken)
       throw {
         code: HttpStatus.BAD_REQUEST,
         message: 'Authorization token is required'
       };
     bearerToken = bearerToken.split(' ')[1];
-    console.log("After Split bearerToken" , bearerToken);
+    //console.log("After Split bearerToken" , bearerToken);
     const user = await jwt.verify(bearerToken, process.env.SECRET_KEY);
-    console.log("User Details After Verification" , user.Email);
+    //console.log("User Details After Verification" , user.Email);
     req.body.UserID = user.Email
     next();
   } catch (error) {
