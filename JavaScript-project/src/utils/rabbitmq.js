@@ -1,5 +1,5 @@
 var amqp = require('amqplib/callback_api');
-import {mailSender} from './sentmail';
+import {SenderRabbitMQ} from './sentmail';
 var emailid;
 export const producer = (userdata) => {
     amqp.connect('amqp://localhost', function (error0, connection) {
@@ -20,11 +20,12 @@ export const producer = (userdata) => {
             channel.sendToQueue(queue, Buffer.from(msg));
             console.log(" [x] Sent %s", msg);
         });
+        
     });
 }
 
-const consumer = () => {
-    amqp.connect('amqp://localhost', function (error0, connection) {
+const reicever = () => {
+amqp.connect('amqp://localhost', function (error0, connection) {
         if (error0) {
             throw error0;
         }
@@ -44,12 +45,11 @@ const consumer = () => {
             channel.consume(queue, function (msg) {
                 let message = JSON.parse(msg.content)
                 console.log(" [x] Received %s", message);
-                mailSender(emailid)
+                SenderRabbitMQ(emailid);
             }, {
                 noAck: true
             });
         });
     });
-}
-
-consumer();
+};
+reicever();
