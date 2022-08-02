@@ -12,7 +12,7 @@ const REFRESH_TOKEN = process.env.REFRESH_TOKEN
 const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
 oAuth2Client.setCredentials({refresh_token: REFRESH_TOKEN})
 
-export async function mailSender(EmailID){
+export async function SenderRabbitMQ(EmailID){
     try{
         const accessToken = await oAuth2Client.getAccessToken();
 
@@ -20,7 +20,7 @@ export async function mailSender(EmailID){
             service:'gmail',
             auth:{
                 type:'OAuth2',
-                user:'roshniadatrao@gmail.com',
+                user:process.env.EMAIL_ID,
                 clientId: CLIENT_ID,
                 clientSecret: CLIENT_SECRET,
                 refreshToken: REFRESH_TOKEN,
@@ -30,10 +30,10 @@ export async function mailSender(EmailID){
         })
 
         const mailOptions = {
-            from: 'Roshni# <roshniadatrao@gmail.com>',
+            from: process.env.EMAIL_ID,
             to: EmailID,
             subject: 'User Registration',
-            text: 'User Registration Successfully',
+            text: 'User Registration Successfully done',
             
         };
 
