@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt  from 'jsonwebtoken';
 import { MailSender } from '../utils/nodemailer';
 import { PasswordHash } from '../utils/user.util';
-
+import { producer } from '../utils/rabbitmq';
 
 //get all users
 export const getAllUsers = async () => {
@@ -15,13 +15,19 @@ export const getAllUsers = async () => {
 export const UserRegistration = async (body) => {
   //console.log("User Registration Request", body);
   //console.log("User Registration Request Password", body.Password);
+  const email = await User.findOne({EmailID:body.EmailID})
+  if(email){
+    throw new Error("Email Id already exits");
+  }else{
   const saltRounds = 10;
   let hashPassword = await bcrypt.hash(body.Password, saltRounds) 
   //console.log("Hash Password", hashPassword);
   body.Password = hashPassword;
   //console.log("After Hashing req body", body);
   const data = await User.create(body);
+  producer(data);
   return data;
+  }
 };
 
 //get single user

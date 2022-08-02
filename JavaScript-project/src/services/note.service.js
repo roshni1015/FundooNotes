@@ -1,9 +1,9 @@
 import Note from '../models/note.model';
 
 export const AddNote = async (body) => {
-    console.log(body);
+    //console.log(body);
     const data = await Note.create(body);
-    console.log(data);
+   // console.log(data);
     return data;
 }
 
