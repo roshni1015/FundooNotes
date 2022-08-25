@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.sentmail = sentmail;
+exports.SenderRabbitMQ = SenderRabbitMQ;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -29,12 +29,12 @@ oAuth2Client.setCredentials({
   refresh_token: REFRESH_TOKEN
 });
 
-function sentmail(_x) {
-  return _sentmail.apply(this, arguments);
+function SenderRabbitMQ(_x) {
+  return _SenderRabbitMQ.apply(this, arguments);
 }
 
-function _sentmail() {
-  _sentmail = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(EmailID) {
+function _SenderRabbitMQ() {
+  _SenderRabbitMQ = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(EmailID) {
     var accessToken, transport, mailOptions, result;
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
@@ -50,7 +50,7 @@ function _sentmail() {
               service: 'gmail',
               auth: {
                 type: 'OAuth2',
-                user: 'roshniadatrao@gmail.com',
+                user: process.env.EMAIL_ID,
                 clientId: CLIENT_ID,
                 clientSecret: CLIENT_SECRET,
                 refreshToken: REFRESH_TOKEN,
@@ -58,7 +58,7 @@ function _sentmail() {
               }
             });
             mailOptions = {
-              from: 'Roshni# <roshniadatrao@gmail.com>',
+              from: process.env.EMAIL_ID,
               to: EmailID,
               subject: 'User Registration',
               text: 'User Registration Successfully done'
@@ -82,5 +82,5 @@ function _sentmail() {
       }
     }, _callee, null, [[0, 12]]);
   }));
-  return _sentmail.apply(this, arguments);
+  return _SenderRabbitMQ.apply(this, arguments);
 }

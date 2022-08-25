@@ -4,6 +4,8 @@ import jwt  from 'jsonwebtoken';
 import { MailSender } from '../utils/nodemailer';
 import { PasswordHash } from '../utils/user.util';
 import { producer } from '../utils/rabbitmq';
+import { client } from '../config/redisdatabase';
+
 
 //get all users
 export const getAllUsers = async () => {
@@ -35,10 +37,13 @@ export const UserLogin = async (userdata) => {
   //console.log("Userdata inside Service ------>", userdata);
   const data = await User.findOne({EmailID: userdata.EmailID});
   console.log("Data After Search", data);
+  
+
   if(data != null){
     const match = await bcrypt.compare(userdata.Password, data.Password);
     if(match){
-      const token = jwt.sign({ "Id": data._id, "FirstName": data.FirstName, "Email": data.EmailID }, process.env.SECRET_KEY);      
+      const token = jwt.sign({ "Id": data._id, "FirstName": data.FirstName, "Email": data.EmailID }, process.env.SECRET_KEY);   
+      await client.del('AddNote');   
       return token;
     }else{
       throw new Error("Invalid Password");
@@ -47,6 +52,8 @@ export const UserLogin = async (userdata) => {
   else{
     throw new Error("User Doesn't Exists")
   }
+
+
 };
 
 export const forgotPassword = async (body) => {

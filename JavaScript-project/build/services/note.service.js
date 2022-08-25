@@ -11,6 +11,8 @@ var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"))
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
+var _redisdatabase = require("../config/redisdatabase");
+
 var _note = _interopRequireDefault(require("../models/note.model"));
 
 var AddNote = /*#__PURE__*/function () {
@@ -25,9 +27,19 @@ var AddNote = /*#__PURE__*/function () {
 
           case 2:
             data = _context.sent;
+
+            if (!data) {
+              _context.next = 6;
+              break;
+            }
+
+            _context.next = 6;
+            return _redisdatabase.client.del('AddNote');
+
+          case 6:
             return _context.abrupt("return", data);
 
-          case 4:
+          case 7:
           case "end":
             return _context.stop();
         }
@@ -56,9 +68,14 @@ var getAllNotes = /*#__PURE__*/function () {
 
           case 2:
             data = _context2.sent;
+
+            if (data) {
+              _redisdatabase.client.set('AddNote', JSON.stringify(data));
+            }
+
             return _context2.abrupt("return", data);
 
-          case 4:
+          case 5:
           case "end":
             return _context2.stop();
         }
@@ -122,9 +139,13 @@ var updateNotes = /*#__PURE__*/function () {
 
           case 2:
             data = _context4.sent;
+            _context4.next = 5;
+            return _redisdatabase.client.del('AddNote');
+
+          case 5:
             return _context4.abrupt("return", data);
 
-          case 4:
+          case 6:
           case "end":
             return _context4.stop();
         }
@@ -152,9 +173,13 @@ var deleteNotes = /*#__PURE__*/function () {
             });
 
           case 2:
+            _context5.next = 4;
+            return _redisdatabase.client.del('AddNote');
+
+          case 4:
             return _context5.abrupt("return", '');
 
-          case 3:
+          case 5:
           case "end":
             return _context5.stop();
         }
@@ -188,9 +213,13 @@ var archiveNotes = /*#__PURE__*/function () {
 
           case 2:
             data = _context6.sent;
+            _context6.next = 5;
+            return _redisdatabase.client.del('AddNote');
+
+          case 5:
             return _context6.abrupt("return", data);
 
-          case 4:
+          case 6:
           case "end":
             return _context6.stop();
         }
@@ -224,9 +253,13 @@ var isTrash = /*#__PURE__*/function () {
 
           case 2:
             data = _context7.sent;
+            _context7.next = 5;
+            return _redisdatabase.client.del('AddNote');
+
+          case 5:
             return _context7.abrupt("return", data);
 
-          case 4:
+          case 6:
           case "end":
             return _context7.stop();
         }

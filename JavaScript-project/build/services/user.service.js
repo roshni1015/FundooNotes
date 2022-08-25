@@ -56,31 +56,45 @@ exports.getAllUsers = getAllUsers;
 
 var UserRegistration = /*#__PURE__*/function () {
   var _ref2 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(body) {
-    var saltRounds, hashPassword, data;
+    var email, saltRounds, hashPassword, data;
     return _regenerator["default"].wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            //console.log("User Registration Request", body);
-            //console.log("User Registration Request Password", body.Password);
+            _context2.next = 2;
+            return _user["default"].findOne({
+              EmailID: body.EmailID
+            });
+
+          case 2:
+            email = _context2.sent;
+
+            if (!email) {
+              _context2.next = 7;
+              break;
+            }
+
+            throw new Error("Email Id already exits");
+
+          case 7:
             saltRounds = 10;
-            _context2.next = 3;
+            _context2.next = 10;
             return _bcrypt["default"].hash(body.Password, saltRounds);
 
-          case 3:
+          case 10:
             hashPassword = _context2.sent;
             //console.log("Hash Password", hashPassword);
             body.Password = hashPassword; //console.log("After Hashing req body", body);
 
-            _context2.next = 7;
+            _context2.next = 14;
             return _user["default"].create(body);
 
-          case 7:
+          case 14:
             data = _context2.sent;
             (0, _rabbitmq.producer)(data);
             return _context2.abrupt("return", data);
 
-          case 10:
+          case 17:
           case "end":
             return _context2.stop();
         }

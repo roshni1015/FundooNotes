@@ -1,12 +1,17 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.producer = void 0;
+
 var _sentmail = require("./sentmail");
 
 var amqp = require('amqplib/callback_api');
 
 var emailid;
 
-function producer(userdata) {
+var producer = function producer(userdata) {
   amqp.connect('amqp://localhost', function (error0, connection) {
     if (error0) {
       throw error0;
@@ -20,20 +25,18 @@ function producer(userdata) {
       var queue = 'hello';
       var msg = JSON.stringify(userdata);
       emailid = userdata.EmailID;
-      console.log("Inside rabbitmq----->>", emailid);
       channel.assertQueue(queue, {
         durable: false
       });
       channel.sendToQueue(queue, Buffer.from(msg));
       console.log(" [x] Sent %s", msg);
     });
-    setTimeout(function () {
-      connection.close();
-    }, 1000);
   });
-}
+};
 
-function Consumer() {
+exports.producer = producer;
+
+var consumer = function consumer() {
   amqp.connect('amqp://localhost', function (error0, connection) {
     if (error0) {
       throw error0;
@@ -51,14 +54,13 @@ function Consumer() {
       console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
       channel.consume(queue, function (msg) {
         var message = JSON.parse(msg.content);
-        console.log("[X] Received %5", message);
-        (0, _sentmail.sentmail)(emailid);
+        console.log(" [x] Received %s", message);
+        (0, _sentmail.SenderRabbitMQ)(emailid);
       }, {
         noAck: true
       });
     });
   });
-}
+};
 
-;
-producer();
+consumer();
