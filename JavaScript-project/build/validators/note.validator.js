@@ -15,7 +15,9 @@ var NoteValidator = function NoteValidator(req, res, next) {
   var schema = _joi["default"].object({
     Title: _joi["default"].string().required(),
     Descreption: _joi["default"].string().required(),
-    Color: _joi["default"].string().optional()
+    Color: _joi["default"].string().allow(''),
+    isArchived: _joi["default"]["boolean"]().optional().allow(false),
+    isTrash: _joi["default"]["boolean"]().optional()
   });
 
   var _schema$validate = schema.validate(req.body),

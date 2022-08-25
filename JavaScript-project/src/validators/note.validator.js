@@ -5,7 +5,9 @@ export const NoteValidator = (req, res, next) => {
     const schema = Joi.object({
         Title: Joi.string().required(),
         Descreption: Joi.string().required(),
-        Color: Joi.string().optional()
+        Color: Joi.string().allow(''),
+        isArchived: Joi.boolean().optional().allow(false),
+        isTrash: Joi.boolean().optional()
     });
     const { error, value } = schema.validate(req.body);
     if (error) {

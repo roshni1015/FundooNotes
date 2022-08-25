@@ -25,6 +25,8 @@ var _routes = _interopRequireDefault(require("./routes"));
 
 var _database = _interopRequireDefault(require("./config/database"));
 
+var _redisdatabase = _interopRequireDefault(require("./config/redisdatabase"));
+
 var _error = require("./middlewares/error.middleware");
 
 var _logger = _interopRequireWildcard(require("./config/logger"));
@@ -52,6 +54,7 @@ app.use((0, _morgan["default"])('combined', {
 }));
 app.use('/api-docs', _swaggerUiExpress["default"].serve, _swaggerUiExpress["default"].setup(_swagger["default"]));
 (0, _database["default"])();
+(0, _redisdatabase["default"])();
 app.use("/api/".concat(api_version), (0, _routes["default"])());
 app.use(_error.appErrorHandler);
 app.use(_error.genericErrorHandler);

@@ -3,6 +3,7 @@ import HttpStatus from 'http-status-codes'
 
 export const redis_Notes = async(req, res, next) => {
     const result = await client.get('AddNote');
+
     if(result){
         const data = JSON.parse(result)
         res.status(HttpStatus.OK).json({

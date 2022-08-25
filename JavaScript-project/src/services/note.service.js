@@ -34,11 +34,16 @@ export const updateNotes = async (_id, body) => {
             new: true
           }
     );
+    if(data) {
+      await client.del('AddNote');
+
+    }
     return data;
   };
 
   export const deleteNotes = async (_id,UserID) => {
     await Note.findByIdAndDelete({_id,UserID:UserID});
+    await client.del('AddNote');
     return '';
   };
   
@@ -54,6 +59,10 @@ export const updateNotes = async (_id, body) => {
         new: true
       }
     );
+    if(data){
+      await client.del('AddNote');
+
+    }
     return data;
   }
   
@@ -69,6 +78,11 @@ export const updateNotes = async (_id, body) => {
         new: true
       }
     );
+    if(data){
+      await client.del('AddNote');
+
+    }
+
     return data;
   }
 
